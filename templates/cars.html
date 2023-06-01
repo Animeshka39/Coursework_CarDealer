@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Fc&Fc</title>
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="static/bootstrap.min.css">
+        <link rel="stylesheet" href="static/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="static/fontAwesome.css">
+        <link rel="stylesheet" href="static/hero-slider.css">
+        <link rel="stylesheet" href="static/owl-carousel.css">
+        <link rel="stylesheet" href="static/style.css">
+
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+        <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    </head>
+
+<body>
+   
+    <div class="wrap">
+        <header id="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button id="primary-nav-button" type="button">Menu</button>
+                        <a href="index"><div class="logo">
+                            <img src="static/img/logo.png" alt="Venue Logo">
+                        </div></a>
+                        <nav id="primary-nav" class="dropdown cf">
+                            <ul class="dropdown menu">
+                                <li class='active'><a href="/">Home</a></li>
+                                <li><a href="cars">Cars</a></li>
+                                <li><a href="about-us">About Us</a></li>
+                                <li><a class="nav-link" href="contact">Contact Us</a></li>
+                            </ul>
+                        </nav><!-- / #primary-nav -->
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+      
+    <section class="banner banner-secondary" id="top" style="background-image: url(static/img/banner-image-1-1920x300.jpg);">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="banner-caption">
+                        <div class="line-dec"></div>
+                        <h2>Cars</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <main>
+
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>Car Brands</title>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+              $(document).ready(function () {
+                // Function to populate car models based on selected brand
+                $("#brand").change(function () {
+                  var brandId = $(this).val();
+        
+                  $.ajax({
+                    url: "/carbrand",
+                    type: "POST",
+                    data: { brand_id: brandId },
+                    success: function (response) {
+                      var options = "<option value=''>Select Model</option>";
+        
+                      $.each(response, function (index, car) {
+                        options +=
+                          "<option value='" +
+                          car.model_id +
+                          "'>" +
+                          car.car_model +
+                          "</option>";
+                      });
+        
+                      $("#model").html(options);
+                    },
+                  });
+                });
+        
+                // Function to display car details based on selected brand and model
+                $("#model").change(function () {
+                  var brandId = $("#brand").val();
+                  var modelId = $(this).val();
+        
+                  $.ajax({
+                    url: "/carcharacteristics",
+                    type: "POST",
+                    data: {
+                      brand_id: brandId,
+                      model_id: modelId,
+                    },
+                    success: function (response) {
+                      if (!$.isEmptyObject(response)) {
+                        $("#car-details").show();
+                        $("#car-photo").attr("src", response.car_photo);
+                        $("#brand-name").text(response.brand_name);
+                        $("#car-model").text(response.car_model);
+                        $("#body-type").text(response.body_type);
+                        $("#number-doors").text(response.number_doors);
+                        $("#price-range").text(response.price_range);
+                        $("#year").text(response.year);
+                        $("#mileage").text(response.mileage);
+                        $("#transmission").text(response.transmission);
+                        $("#fuel-type").text(response.fuel_type);
+                        $("#color").text(response.color);
+                        $("#technical-condition").text(response.technical_condition);
+                        $("#customs-cleared").text(response.customs_cleared);
+                        $("#driven-from").text(response.driven_from);
+                        $("#engine-size").text(response.engine_size);
+                        $("#engine-name").text(response.engine_name);
+                        $("#engine-hp").text(response.engine_hp);
+                        $("#location").text(response.location);
+                        $("#seller-id").text(response.seller_id);
+                      } else {
+                        $("#car-details").hide();
+                      }
+                    },
+                  });
+                });
+        
+                // Function to filter cars based on selected criteria
+                $("#filter-form").submit(function (e) {
+                  e.preventDefault();
+        
+                  var formData = $(this).serialize();
+        
+                  $.ajax({
+                    url: "/filter",
+                    type: "POST",
+                    data: formData,
+                    success: function (response) {
+                      var carList = $("#car-list");
+        
+                      carList.empty();
+        
+                      $.each(response, function (index, car) {
+                        var carItem =
+                          "<li><img src='" + car.car_photo + "' alt='Car Photo'>";
+                        carItem += "<h3>" + car.car_model + "</h3>";
+                        carItem += "<p>Body Type: " + car.body_type + "</p>";
+                        carItem += "<p>Number of Doors: " + car.number_doors + "</p>";
+                        carItem += "<p>Price Range: " + car.price_range + "</p>";
+                        carItem += "<p>Year: " + car.year + "</p>";
+                        carItem += "<p>Mileage: " + car.mileage + "</p>";
+                        carItem += "<p>Transmission: " + car.transmission + "</p>";
+                        carItem += "<p>Fuel Type: " + car.fuel_type + "</p>";
+                        carItem += "<p>Color: " + car.color + "</p>";
+                        carItem += "<p>Technical Condition: " + car.technical_condition + "</p>";
+                        carItem += "<p>Customs Cleared: " + car.customs_cleared + "</p>";
+                        carItem += "<p>Driven From: " + car.driven_from + "</p>";
+                        carItem += "<p>Engine Size: " + car.engine_size + "</p>";
+                        carItem += "<p>Engine Name: " + car.engine_name + "</p>";
+                        carItem += "<p>Engine HP: " + car.engine_hp + "</p>";
+                        carItem += "<p>Location: " + car.location + "</p>";
+                        carItem += "<p>Seller ID: " + car.seller_id + "</p>";
+                        carItem += "<button class='btn btn-primary seller-info-btn' data-model-id='" + car.model_id + "'>Show Seller Info</button>";
+                        carItem += "<div class='seller-info' style='display: none;'></div>"; // Placeholder for seller info
+                        carItem += "<form class='delete-car-form' method='POST' action='/deletecar'>";
+                        carItem += "<input type='hidden' name='model_id' value='" + car.model_id + "'>";
+                        carItem += "<button type='submit'>Delete Car</button>";
+                        carItem += "</form></li>";
+        
+                        carList.append(carItem);
+                      });
+        
+                    },
+                  });
+                });
+        
+                $(document).ready(function() {
+                  // Event listener for "Show Seller Info" button
+                  $(document).on('click', '.seller-info-btn', function() {
+                    var modelId = $(this).data('model-id');
+                    var sellerInfoContainer = $(this).siblings('.seller-info');
+                
+                    // Retrieve seller information using AJAX
+                    $.get('/sellers', { model_id: modelId }, function(response) {
+                      if (response.seller_name !== 'Seller not found') {
+                        var sellerInfo = "<p>Seller Name: " + response.seller_name + "</p>";
+                        sellerInfo += "<p>Seller Email: " + response.seller_email + "</p>";
+                        sellerInfo += "<p>Seller Phone: " + response.seller_phone + "</p>";
+                        sellerInfo += "<p>Seller Location: " + response.seller_location + "</p>";
+                        sellerInfoContainer.html(sellerInfo);
+                      } else {
+                        sellerInfoContainer.html("Seller information not found.");
+                      }
+                
+                      sellerInfoContainer.show();
+                    });
+                  });
+                });
+                
+                // Function to handle the delete car form submission
+                $(document).on("submit", ".delete-car-form", function (e) {
+                  e.preventDefault();
+        
+                  var formData = $(this).serialize();
+        
+                  $.ajax({
+                    url: "/deletecar",
+                    type: "POST",
+                    data: formData,
+                    success: function (response) {
+                      // Refresh the car list after successful deletion
+                      $("#filter-form").submit();
+                    },
+                  });
+                });
+              });
+        
+
+
+              document.addEventListener("DOMContentLoaded", function() {
+                var modal = document.getElementById("add-car-modal");
+                var btn = document.getElementById("add-car-btn");
+                var closeBtn = document.getElementsByClassName("close")[0];
+              
+                btn.addEventListener("click", function() {
+                  modal.style.display = "block";
+                });
+              
+                closeBtn.addEventListener("click", function() {
+                  modal.style.display = "none";
+                });
+              
+                window.addEventListener("click", function(event) {
+                  if (event.target == modal) {
+                    modal.style.display = "none";
+                  }
+                });
+              });
+            </script>
+          </head>
+          <body>
+            <h1>Car Brands</h1>
+
+            
+            <form id="filter-form" method="POST" action="/filter">
+                <div class="form-group">
+                  <label for="brand">Brand:</label>
+                  <select id="brand" name="brand_id">
+                    <option value="">Select Brand</option>
+                    {% for brand in carbrands %}
+                    <option value="{{ brand.brand_id }}">{{ brand.brand_name }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              
+                <div class="form-group">
+                  <label for="model">Model:</label>
+                  <select id="model" name="model_id">
+                    <option value="">Select Model</option>
+                  </select>
+                </div>
+              
+                <div class="form-group">
+                  <label for="transmission">Transmission:</label>
+                  <select id="transmission" name="transmission">
+                    <option value="">Any</option>
+                    <option value="Automatic">Automatic</option>
+                    <option value="CVT">CVT</option>
+                    <option value="Manual">Manual</option>
+                  </select>
+                </div>
+              
+                <div class="form-group">
+                  <label for="body-type">Body Type:</label>
+                  <input type="text" id="body-type" name="body_type" />
+                </div>
+              
+                <div class="form-group">
+                  <label for="number-doors">Number of Doors:</label>
+                  <input type="text" id="number-doors" name="number_doors" />
+                </div>
+              
+                <div class="form-group">
+                  <label for="min-price">Min Price:</label>
+                  <input type="text" id="min-price" name="min_price" />
+                </div>
+              
+                <div class="form-group">
+                  <label for="max-price">Max Price:</label>
+                  <input type="text" id="max-price" name="max_price" />
+                </div>
+              
+                <div class="form-group">
+                  <label for="min-year">Min Year:</label>
+                  <input type="text" id="min-year" name="min_year" />
+                </div>
+              
+                <div class="form-group">
+                  <label for="max-year">Max Year:</label>
+                  <input type="text" id="max-year" name="max_year" />
+                </div>
+              
+                <div class="form-group">
+                  <label for="min-mileage">Min Mileage:</label>
+                  <input type="text" id="min-mileage" name="min_mileage" />
+                </div>
+              
+                <div class="form-group">
+                  <label for="max-mileage">Max Mileage:</label>
+                  <input type="text" id="max-mileage" name="max_mileage" />
+                </div>
+              
+                <div class="form-group">
+                  <label for="engine-size">Engine Size:</label>
+                  <input type="text" id="engine-size" name="engine_size" />
+                </div>
+              
+                <div class="form-group">
+                  <label for="engine-name">Engine Name:</label>
+                  <input type="text" id="engine-name" name="engine_name" />
+                </div>
+              
+                <div class="form-group">
+                  <label for="engine-hp">Engine HP:</label>
+                  <input type="text" id="engine-hp" name="engine_hp" />
+                </div>
+              
+                <div class="form-group">
+                  <label for="location">Location:</label>
+                  <input type="text" id="location" name="location" />
+                </div>
+              
+                <button type="submit" class="btn btn-primary">Filter Cars</button>
+              </form>
+            <div>
+                <div style="text-align: center;"> <h2>Car List</h2></div>
+                    <ul id="car-list">
+                    <!-- Cars will be dynamically added here -->
+                    </ul>
+                    
+            </div>
+
+        <button id="add-car-btn" class="btn btn-primary" >Add a Car</button>
+
+            <div id="add-car-modal" class="modal">
+              <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="add-car-form">
+                  
+                  <h2>Add a Car</h2>
+                  <form action="{{ url_for('add_car') }}" method="POST">
+                    <label for="brand_id">Brand:</label>
+                    <select id="brand_id" name="brand_id" required>
+                      {% for carbrand in carbrands %}
+                      <option value="{{ carbrand.brand_id }}">
+                        {{ carbrand.brand_name }}
+                      </option>
+                      {% endfor %}
+                    </select>
+                    <br /><br />
+                    <label for="car_model">Model:</label>
+                    <input type="text" id="car_model" name="car_model" required />
+                    <br /><br />
+                    <label for="body_type">Body Type:</label>
+                    <input type="text" id="body_type" name="body_type" required />
+                    <br /><br />
+                    <label for="number_doors">Number of Doors:</label>
+                    <input type="text" id="number_doors" name="number_doors" required />
+                    <br /><br />
+                    <label for="price_range">Price Range:</label>
+                    <input type="text" id="price_range" name="price_range" required />
+                    <br /><br />
+                    <label for="year">Year:</label>
+                    <input type="text" id="year" name="year" required />
+                    <br /><br />
+                    <label for="mileage">Mileage:</label>
+                    <input type="text" id="mileage" name="mileage" required />
+                    <br /><br />
+                    <label for="transmission">Transmission:</label>
+                    <input type="text" id="transmission" name="transmission" required />
+                    <br /><br />
+                    <label for="fuel_type">Fuel Type:</label>
+                    <input type="text" id="fuel_type" name="fuel_type" required />
+                    <br /><br />
+                    <label for="color">Color:</label>
+                    <input type="text" id="color" name="color" required />
+                    <br /><br />
+                    <label for="technical_condition">Technical Condition:</label>
+                    <input
+                      type="text"
+                      id="technical_condition"
+                      name="technical_condition"
+                      required
+                    />
+                    <br /><br />
+                    <label for="customs_cleared">Customs Cleared:</label>
+                    <input
+                      type="text"
+                      id="customs_cleared"
+                      name="customs_cleared"
+                      required
+                    />
+                    <br /><br />
+                    <label for="driven_from">Driven From:</label>
+                    <input type="text" id="driven_from" name="driven_from" required />
+                    <br /><br />
+                    <label for="engine_size">Engine Size:</label>
+                    <input type="text" id="engine_size" name="engine_size" required />
+                    <br /><br />
+                    <label for="engine_name">Engine Name:</label>
+                    <input type="text" id="engine_name" name="engine_name" required />
+                    <br /><br />
+                    <label for="engine_hp">Engine HP:</label>
+                    <input type="text" id="engine_hp" name="engine_hp" required />
+                    <br /><br />
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" name="location" required />
+                    <br /><br />
+                    <label for="seller_id">Seller ID:</label>
+                    <input type="text" id="seller_id" name="seller_id" required />
+                    <br /><br />
+                    <input type="submit" class="btn btn-primary" value="Add Car" />
+                  </form>
+                </div>
+              </div>
+            </div>
+            
+              
+            </div>
+        
+                </div>
+              </div>
+            </div>
+
+
+
+          </body>
+        </html>
+        
+
+    </main>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="about-veno">
+                        <div class="logo">
+                            <img src="static/img/footer_logo.png" alt="Venue Logo">
+                        </div>
+                        <p>Owning a car is not just about driving, it's about the experiences and memories that are created along the way.</p>
+                        <ul class="social-icons">
+                            <li>
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="useful-links">
+                        <div class="footer-heading">
+                            <h4>Useful Links</h4>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul>
+                                    <li><a href="index"><i class="fa fa-stop"></i>Home</a></li>
+                                    <li><a href="about"><i class="fa fa-stop"></i>About</a></li>
+                                    <li><a href="contact"><i class="fa fa-stop"></i>Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="contact-info">
+                        <div class="footer-heading">
+                            <h4>Contact Information</h4>
+                        </div>
+                        <p><i class="fa fa-map-marker"></i> 212 Barrington Court New York, ABC</p>
+                        <ul>
+                            <li><span>Phone:</span><a href="#">+1 333 4040 5566</a></li>
+                            <li><span>Email:</span><a href="#">contact@company.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+       
+    </footer>
+
+    <div class="sub-footer">
+        <p>Copyright © Fc&Fc / Fast cars and Furiously cheap</p>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+
+    <script src="js/vendor/bootstrap.min.js"></script>
+    
+    <script src="js/datepicker.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
