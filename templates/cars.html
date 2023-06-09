@@ -18,31 +18,43 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
 
 <body>
    
     <div class="wrap">
-        <header id="header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <button id="primary-nav-button" type="button">Menu</button>
-                        <a href="index"><div class="logo">
-                            <img src="static/img/logo.png" alt="Venue Logo">
-                        </div></a>
-                        <nav id="primary-nav" class="dropdown cf">
-                            <ul class="dropdown menu">
-                                <li class='active'><a href="/">Home</a></li>
-                                <li><a href="cars">Cars</a></li>
-                                <li><a href="about-us">About Us</a></li>
-                                <li><a class="nav-link" href="contact">Contact Us</a></li>
-                            </ul>
-                        </nav><!-- / #primary-nav -->
-                    </div>
-                </div>
+      <header id="header">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <button id="primary-nav-button" type="button">Menu</button>
+              <a href="index.html"
+                ><div class="logo">
+                  <img src="static/img/logo.png" alt="Venue Logo" /></div
+              ></a>
+              <nav id="primary-nav" class="dropdown cf">
+                <ul class="dropdown menu">
+                  <li class="active"><a href="/">Home</a></li>
+                  <li><a href="/cars">Cars</a></li>
+                  <li><a href="/about-us">About Us</a></li>
+                  <li><a class="nav-link" href="/contact">Contact Us</a></li>
+                  {% if username %}
+                  <li><a class="nav-link" href="/logout">Logout</a></li>
+                  {% else %}
+                  <li><a class="nav-link" href="/login">Login</a></li>
+                  <li><a class="nav-link" href="/register">Register</a></li>
+                </ul>
+              </nav>
             </div>
-        </header>
+          </div>
+        </div>
+            {% endif %} {% if username %}
+            <div class="user">Welcome, {{ username }}! Your role: {{ role }}</div>
+              {% else %}
+              <div class="user">Welcome to the website!</div>
+            {% endif %}
+      </header>
     </div>
       
     <section class="banner banner-secondary" id="top" style="background-image: url(static/img/banner-image-1-1920x300.jpg);">
@@ -65,6 +77,7 @@
             <title>Car Brands</title>
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <script>
+              
               $(document).ready(function () {
                 // Function to populate car models based on selected brand
                 $("#brand").change(function () {
@@ -171,7 +184,9 @@
                         carItem += "<div class='seller-info' style='display: none;'></div>"; // Placeholder for seller info
                         carItem += "<form class='delete-car-form' method='POST' action='/deletecar'>";
                         carItem += "<input type='hidden' name='model_id' value='" + car.model_id + "'>";
-                        carItem += "<button type='submit'>Delete Car</button>";
+                        {% if 'role' in session and session['role'] == 'admin' %}
+                        carItem +=  "<button type='submit'>Delete Car</button>";
+                        {% endif %}
                         carItem += "</form></li>";
         
                         carList.append(carItem);
@@ -187,22 +202,29 @@
                     var modelId = $(this).data('model-id');
                     var sellerInfoContainer = $(this).siblings('.seller-info');
                 
-                    // Retrieve seller information using AJAX
-                    $.get('/sellers', { model_id: modelId }, function(response) {
-                      if (response.seller_name !== 'Seller not found') {
-                        var sellerInfo = "<p>Seller Name: " + response.seller_name + "</p>";
-                        sellerInfo += "<p>Seller Email: " + response.seller_email + "</p>";
-                        sellerInfo += "<p>Seller Phone: " + response.seller_phone + "</p>";
-                        sellerInfo += "<p>Seller Location: " + response.seller_location + "</p>";
-                        sellerInfoContainer.html(sellerInfo);
-                      } else {
-                        sellerInfoContainer.html("Seller information not found.");
-                      }
+                    // Check if the seller information is visible
+                    if (sellerInfoContainer.is(':visible')) {
+                      // If visible, hide the seller information
+                      sellerInfoContainer.hide();
+                    } else {
+                      // If hidden, retrieve and display the seller information using AJAX
+                      $.get('/sellers', { model_id: modelId }, function(response) {
+                        if (response.seller_name !== 'Seller not found') {
+                          var sellerInfo = "<p>Seller Name: " + response.seller_name + "</p>";
+                          sellerInfo += "<p>Seller Email: " + response.seller_email + "</p>";
+                          sellerInfo += "<p>Seller Phone: " + response.seller_phone + "</p>";
+                          sellerInfo += "<p>Seller Location: " + response.seller_location + "</p>";
+                          sellerInfoContainer.html(sellerInfo);
+                        } else {
+                          sellerInfoContainer.html("Seller information not found.");
+                        }
                 
-                      sellerInfoContainer.show();
-                    });
+                        sellerInfoContainer.show();
+                      });
+                    }
                   });
                 });
+                
                 
                 // Function to handle the delete car form submission
                 $(document).on("submit", ".delete-car-form", function (e) {
@@ -346,16 +368,18 @@
                     </ul>
                     
             </div>
-
+            {% if 'role' in session and session['role'] == 'admin' %}
         <button id="add-car-btn" class="btn btn-primary" >Add a Car</button>
-
+        {% endif %}
             <div id="add-car-modal" class="modal">
               <div class="modal-content">
                 <span class="close">&times;</span>
                 <div class="add-car-form">
-                  
+                 
                   <h2>Add a Car</h2>
                   <form action="{{ url_for('add_car') }}" method="POST">
+                    
+                    
                     <label for="brand_id">Brand:</label>
                     <select id="brand_id" name="brand_id" required>
                       {% for carbrand in carbrands %}
@@ -447,60 +471,67 @@
 
     </main>
     <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-5">
-                    <div class="about-veno">
-                        <div class="logo">
-                            <img src="static/img/footer_logo.png" alt="Venue Logo">
-                        </div>
-                        <p>Owning a car is not just about driving, it's about the experiences and memories that are created along the way.</p>
-                        <ul class="social-icons">
-                            <li>
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="useful-links">
-                        <div class="footer-heading">
-                            <h4>Useful Links</h4>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <ul>
-                                    <li><a href="index"><i class="fa fa-stop"></i>Home</a></li>
-                                    <li><a href="about"><i class="fa fa-stop"></i>About</a></li>
-                                    <li><a href="contact"><i class="fa fa-stop"></i>Contact Us</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="contact-info">
-                        <div class="footer-heading">
-                            <h4>Contact Information</h4>
-                        </div>
-                        <p><i class="fa fa-map-marker"></i> 212 Barrington Court New York, ABC</p>
-                        <ul>
-                            <li><span>Phone:</span><a href="#">+1 333 4040 5566</a></li>
-                            <li><span>Email:</span><a href="#">contact@company.com</a></li>
-                        </ul>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-5">
+            <div class="about-veno">
+              <div class="logo">
+                <img src="static/img/footer_logo.png" alt="Venue Logo" />
+              </div>
+              <p>
+                Owning a car is not just about driving, it's about the
+                experiences and memories that are created along the way.
+              </p>
+              <ul class="social-icons">
+                <li>
+                    
+                  <a href="https://www.facebook.com/sasha.sergienko.944"><i class="fa fa-facebook"></i></a>
+                  <a href="https://twitter.com/sashasergienk9"><i class="fa fa-twitter"></i></a>
+                  <a href="https://www.linkedin.com/in/sasha-sergienko-07b2a2246/"><i class="fa fa-linkedin"></i></a>
+                  <a href="https://www.instagram.com/goadventure___/"><i class="fa fa-instagram"></i></a>
+                  
+                </li>
+              </ul>
             </div>
+          </div>
+          <div class="col-md-4">
+            <div class="useful-links">
+              <div class="footer-heading">
+                <h4>Useful Links</h4>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <ul>
+                    <li>
+                      <a href="/"><i class="fa fa-stop"></i>Home</a>
+                    </li>
+                    <li>
+                      <a href="/about-us"><i class="fa fa-stop"></i>About</a>
+                    </li>
+                    <li>
+                      <a href="/contact"><i class="fa fa-stop"></i>Contact Us</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="contact-info">
+              <div class="footer-heading">
+                <h4>Contact Information</h4>
+              </div>
+              <p>
+                <i class="fa fa-map-marker"></i> Cherkasy State Technological University
+              </p>
+              <ul>
+                <li><span>Phone:</span><a href="#">097 19 266 31</a></li>
+                <li><span>Email:</span><a href="#">sergiosasa9@gmail.com</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
-
-
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
-       
+      </div>
     </footer>
 
     <div class="sub-footer">

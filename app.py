@@ -1,10 +1,11 @@
-from flask import Flask, render_template, jsonify, request, redirect
+from flask import Flask, render_template, jsonify, redirect, request, session, flash
 import psycopg2
 import psycopg2.extras
 
 app = Flask(__name__)
 app.secret_key = "caircocoders-ednalan"
 
+# Database configuration
 DB_HOST = "localhost"
 DB_NAME = "sampledb0"
 DB_USER = "postgres"
@@ -15,20 +16,42 @@ conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    # Check if the user is logged in
+    if 'username' in session:
+        username = session['username']
+        role = session['role']
+        return render_template('index.html', username=username, role=role)
+    else:
+        return render_template('index.html')
 
-
-@app.route('/contact')
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
-    return render_template('contact.html')
+    if 'username' in session:
+        username = session['username']
+        role = session['role']
+        return render_template('contact.html', username=username, role=role)
+    else:
+        return render_template('contact.html')
+    
+    if request.method == 'POST':
+        return send_message()
+    else:
+        return render_template('contact.html')
 
 
 @app.route('/cars')
 def cars():
+    
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cur.execute("SELECT * FROM carbrands ORDER BY brand_id")
     carbrands = cur.fetchall()
-    return render_template('cars.html', carbrands=carbrands)
+    if 'username' in session:
+        username = session['username']
+        role = session['role']
+        return render_template('cars.html', username=username, role=role)
+    else:
+        return render_template('cars.html', carbrands=carbrands)
+
 
 
 @app.route('/car-details')
@@ -38,8 +61,74 @@ def car_details():
 
 @app.route('/about-us')
 def about_us():
-    return render_template('about-us.html')
+     if 'username' in session:
+        username = session['username']
+        role = session['role']
+        return render_template('about-us.html', username=username, role=role)
+     else:
+        return render_template('about-us.html')
 
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        # Check if the username and password are valid
+        if username and password:
+            cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            cur.execute("SELECT * FROM users WHERE username = %s AND password = %s", (username, password))
+            user = cur.fetchone()
+            cur.close()
+
+            if user:
+                # Store the user's information in the session
+                session['username'] = user['username']
+                session['role'] = user['role']
+                flash('Logged in successfully!', 'success')
+                return redirect('/')
+            else:
+                flash('Invalid username or password', 'error')
+                return redirect('/login')
+        else:
+            flash('Please enter both username and password', 'error')
+            return redirect('/login')
+    else:
+        return render_template('login.html')
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm_password')
+
+        # Check if the username and password are provided and if the passwords match
+        if username and password and password == confirm_password:
+            cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+            # Check if the username is already taken
+            cur.execute("SELECT * FROM users WHERE username = %s", (username,))
+            existing_user = cur.fetchone()
+
+            if existing_user:
+                flash('Username already exists', 'error')
+                return redirect('/register')
+            else:
+                # Create a new user
+                cur.execute("INSERT INTO users (username, password, role) VALUES (%s, %s, %s)",
+                            (username, password, 'user'))
+                conn.commit()
+                flash('Registered successfully! Please login.', 'success')
+                return redirect('/login')
+        else:
+            flash('Please enter a valid username and password, and make sure the passwords match', 'error')
+            return redirect('/register')
+    else:
+        return render_template('register.html')
 
 @app.route("/carbrand", methods=["POST"])
 def car_brand():
@@ -281,6 +370,36 @@ def get_seller_info():
         cur.close()
         conn.rollback()
         return str(e), 500
+    
+@app.route('/send-message', methods=['POST'])
+def send_message():
+    if 'message_sent' in session:
+        flash('You have already sent a message!', 'warning')
+        return redirect('/contact')
+
+    name = request.form.get('name')
+    subject = request.form.get('subject')
+    message = request.form.get('message')
+
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur.execute("INSERT INTO messages (name, subject, message) VALUES (%s, %s, %s)",
+                (name, subject, message))
+    conn.commit()
+    cur.close()
+
+    session['message_sent'] = True
+    flash('Message sent successfully!', 'success')
+    return redirect('/contact')
+
+
+
+@app.route('/logout')
+def logout():
+    # Clear the session data
+    session.clear()
+    flash('Logged out successfully!', 'success')
+    return redirect('/')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
