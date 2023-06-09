@@ -1,351 +1,452 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Fc&Fc</title>
-        
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Fc&Fc</title>
 
-        <link rel="stylesheet" href="static/bootstrap.min.css">
-        <link rel="stylesheet" href="static/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="static/fontAwesome.css">
-        <link rel="stylesheet" href="static/hero-slider.css">
-        <link rel="stylesheet" href="static/owl-carousel.css">
-        <link rel="stylesheet" href="static/style.css">
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="static/bootstrap.min.css" />
+    <link rel="stylesheet" href="static/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="static/fontAwesome.css" />
+    <link rel="stylesheet" href="static/hero-slider.css" />
+    <link rel="stylesheet" href="static/owl-carousel.css" />
+    <link rel="stylesheet" href="static/style.css" />
 
-        <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-    </head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900"
+      rel="stylesheet"
+    />
 
-<body>
- 
+    <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+  </head>
+
+  <body>
     <div class="wrap">
-        <header id="header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <button id="primary-nav-button" type="button">Menu</button>
-                        <a href="index.html"><div class="logo">
-                            <img src="static/img/logo.png" alt="Venue Logo">
-                        </div></a>
-                        <nav id="primary-nav" class="dropdown cf">
-                            <ul class="dropdown menu">
-                                <li class='active'><a href="/">Home</a></li>
-                                <li><a href="/cars">Cars</a></li>
-                                <li><a href="/about-us">About Us</a></li>
-                                <li><a class="nav-link" href="/contact">Contact Us</a></li>
-                            </ul>
-                        </nav><!-- / #primary-nav -->
-                    </div>
-                </div>
-            </div>
-        </header>
-    </div>
-      
-    <section class="banner" id="top" style="background-image: url(static/img/homepage-banner-image-1920x700.jpg);">
+      <header id="header">
         <div class="container">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <div class="banner-caption">
-                        <div class="line-dec"></div>
-                        <h2>Our main purpose to give you, your dream 10 second car.</h2>
-                        <div class="blue-button">
-                            <a href="/contact">Contact Us</a>
-                        </div>
-                    </div>
-                </div>
+          <div class="row">
+            <div class="col-md-12">
+              <button id="primary-nav-button" type="button">Menu</button>
+              <a href="index.html"
+                ><div class="logo">
+                  <img src="static/img/logo.png" alt="Venue Logo" /></div
+              ></a>
+              <nav id="primary-nav" class="dropdown cf">
+                <ul class="dropdown menu">
+                  <li class="active"><a href="/">Home</a></li>
+                  <li><a href="/cars">Cars</a></li>
+                  <li><a href="/about-us">About Us</a></li>
+                  <li><a class="nav-link" href="/contact">Contact Us</a></li>
+                  {% if username %}
+                  <li><a class="nav-link" href="/logout">Logout</a></li>
+                  {% else %}
+                  <li><a class="nav-link" href="/login">Login</a></li>
+                  <li><a class="nav-link" href="/register">Register</a></li>
+                </ul>
+              </nav>
             </div>
+          </div>
         </div>
+            {% endif %} {% if username %}
+            <div class="user">Welcome, {{ username }}! Your role: {{ role }}</div>
+              {% else %}
+              <div class="user">Welcome to the website!</div>
+            {% endif %}
+      </header>
+    </div>
+
+    <section
+      class="banner"
+      id="top"
+      style="
+        background-image: url(static/img/homepage-banner-image-1920x700.jpg);
+      "
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <div class="banner-caption">
+              <div class="line-dec"></div>
+              <h2>Our main purpose to give you, your dream 10 second car.</h2>
+              <div class="blue-button">
+                <a href="/contact">Contact Us</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <main>
-        <section class="our-services">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-7">
-                        <div class="left-content">
-                            <br>
-                            <h4>About us</h4>
-                            <p>If you're a car enthusiast who's into JDM, drift, or sports cars, then you might want to check out a specialized car company that sells these types of vehicles. These cars are known for their unique designs, high-performance engines, and exhilarating driving experiences. Whether you're looking for a classic JDM car like a Nissan Skyline or a Toyota Supra, a drift car like a Mazda RX-7 or a Nissan 240SX, or a sports car like a Porsche 911 or a Chevrolet Corvette, this company has got you covered. With their vast selection of cars, you can find the car of your dreams and take it for a spin. Plus, their knowledgeable staff can help you navigate the buying process and answer any questions you may have about the cars. So, if you're in the market for a JDM, drift, or sports car, this company is definitely worth checking out.</p>
-                            <div class="blue-button">
-                                <a href="about-us">Discover More</a>
-                            </div>
-
-                            <br>
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <img src="static/img/about-1-720x480.jpg" class="img-fluid" alt="">
-                    </div>
+      <section class="our-services">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-7">
+              <div class="left-content">
+                <br />
+                <h4>About us</h4>
+                <p>
+                  If you're a car enthusiast who's into JDM, drift, or sports
+                  cars, then you might want to check out a specialized car
+                  company that sells these types of vehicles. These cars are
+                  known for their unique designs, high-performance engines, and
+                  exhilarating driving experiences. Whether you're looking for a
+                  classic JDM car like a Nissan Skyline or a Toyota Supra, a
+                  drift car like a Mazda RX-7 or a Nissan 240SX, or a sports car
+                  like a Porsche 911 or a Chevrolet Corvette, this company has
+                  got you covered. With their vast selection of cars, you can
+                  find the car of your dreams and take it for a spin. Plus,
+                  their knowledgeable staff can help you navigate the buying
+                  process and answer any questions you may have about the cars.
+                  So, if you're in the market for a JDM, drift, or sports car,
+                  this company is definitely worth checking out.
+                </p>
+                <div class="blue-button">
+                  <a href="about-us">Discover More</a>
                 </div>
+
+                <br />
+              </div>
             </div>
-        </section>
+            <div class="col-md-5">
+              <img
+                src="static/img/about-1-720x480.jpg"
+                class="img-fluid"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <section class="featured-places">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="section-heading">
-                            <span>Featured Cars</span>
-                            <h2>Top Cars Right Now on Market</h2>
-                        </div>
-                    </div> 
-                </div> 
-                <div class="row">
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="featured-item">
-                            <div class="thumb">
-                                <div class="thumb-img">
-                                    <img src="static/img/product-1-720x480.jpg" alt="">
-                                </div>
-                                <div class="overlay-content">
-                                  <strong><i class="fa fa-dashboard"></i> 130 000km</strong> &nbsp;&nbsp;&nbsp;&nbsp;
-                                  <strong><i class="fa fa-cube"></i> 1800 cc</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                                  <strong><i class="fa fa-cog"></i> Manual</strong>
-                                </div>
-                            </div>
-                            <div class="down-content">
-                                <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-
-                                <br>
-
-                                <p>190 hp  /  Petrol  /  2008  /  Used vehicle</p>
-
-                                <p><span><del><sup>$</sup>11999.00 </del> <strong><sup>$</sup>11779.00</strong></span></p>
-
-                                <div class="text-button">
-                                    <a href="car-details.html">View More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="featured-item">
-                            <div class="thumb">
-                                <div class="thumb-img">
-                                    <img src="static/img/product-2-720x480.jpg" alt="">
-                                </div>
-                                <div class="overlay-content">
-                                  <strong><i class="fa fa-dashboard"></i> 130 000km</strong> &nbsp;&nbsp;&nbsp;&nbsp;
-                                  <strong><i class="fa fa-cube"></i> 1800 cc</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                                  <strong><i class="fa fa-cog"></i> Manual</strong>
-                                </div>
-                            </div>
-                            <div class="down-content">
-                                <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-
-                                <br>
-
-                                <p>190 hp  /  Petrol  /  2008  /  Used vehicle</p>
-
-                                <p><span><del><sup>$</sup>11999.00 </del> <strong><sup>$</sup>11779.00</strong></span></p>
-
-                                <div class="text-button">
-                                    <a href="car-details.html">View More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="featured-item">
-                            <div class="thumb">
-                                <div class="thumb-img">
-                                    <img src="static/img/product-3-720x480.jpg" alt="">
-                                </div>
-                                <div class="overlay-content">
-                                  <strong><i class="fa fa-dashboard"></i> 130 000km</strong> &nbsp;&nbsp;&nbsp;&nbsp;
-                                  <strong><i class="fa fa-cube"></i> 1800 cc</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                                  <strong><i class="fa fa-cog"></i> Manual</strong>
-                                </div>
-                            </div>
-                            <div class="down-content">
-                                <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-
-                                <br>
-
-                                <p>190 hp  /  Petrol  /  2008  /  Used vehicle</p>
-
-                                <p><span><del><sup>$</sup>11999.00 </del> <strong><sup>$</sup>11779.00</strong></span></p>
-
-                                <div class="text-button">
-                                    <a href="car-details.html">View More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="featured-item">
-                            <div class="thumb">
-                                <div class="thumb-img">
-                                    <img src="static/img/product-4-720x480.jpg" alt="">
-                                </div>
-                                <div class="overlay-content">
-                                  <strong><i class="fa fa-dashboard"></i> 130 000km</strong> &nbsp;&nbsp;&nbsp;&nbsp;
-                                  <strong><i class="fa fa-cube"></i> 1800 cc</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                                  <strong><i class="fa fa-cog"></i> Manual</strong>
-                                </div>
-                            </div>
-                            <div class="down-content">
-                                <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-
-                                <br>
-
-                                <p>190 hp  /  Petrol  /  2008  /  Used vehicle</p>
-
-                                <p><span><del><sup>$</sup>11999.00 </del> <strong><sup>$</sup>11779.00</strong></span></p>
-
-                                <div class="text-button">
-                                    <a href="car-details.html">View More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="featured-item">
-                            <div class="thumb">
-                                <div class="thumb-img">
-                                    <img src="static/img/product-5-720x480.jpg" alt="">
-                                </div>
-                                <div class="overlay-content">
-                                  <strong><i class="fa fa-dashboard"></i> 130 000km</strong> &nbsp;&nbsp;&nbsp;&nbsp;
-                                  <strong><i class="fa fa-cube"></i> 1800 cc</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                                  <strong><i class="fa fa-cog"></i> Manual</strong>
-                                </div>
-                            </div>
-                            <div class="down-content">
-                                <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-
-                                <br>
-
-                                <p>190 hp  /  Petrol  /  2008  /  Used vehicle</p>
-
-                                <p><span><del><sup>$</sup>11999.00 </del> <strong><sup>$</sup>11779.00</strong></span></p>
-
-                                <div class="text-button">
-                                    <a href="car-details.html">View More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="featured-item">
-                            <div class="thumb">
-                                <div class="thumb-img">
-                                    <img src="static/img/product-6-720x480.jpg" alt="">
-                                </div>
-                                <div class="overlay-content">
-                                  <strong><i class="fa fa-dashboard"></i> 130 000km</strong> &nbsp;&nbsp;&nbsp;&nbsp;
-                                  <strong><i class="fa fa-cube"></i> 1800 cc</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                                  <strong><i class="fa fa-cog"></i> Manual</strong>
-                                </div>
-                            </div>
-                            <div class="down-content">
-                                <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-
-                                <br>
-
-                                <p>190 hp  /  Petrol  /  2008  /  Used vehicle</p>
-
-                                <p><span><del><sup>$</sup>11999.00 </del> <strong><sup>$</sup>11779.00</strong></span></p>
-
-                                <div class="text-button">
-                                    <a href="/car-details.html">View More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+      <section class="featured-places">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="section-heading">
+                <span>Featured Cars</span>
+                <h2>Top Cars Right Now on Market</h2>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="featured-item">
+                <div class="thumb">
+                  <div class="thumb-img">
+                    <img src="static/img/product-1-720x480.jpg" alt="" />
+                  </div>
+                  <div class="overlay-content">
+                    <strong><i class="fa fa-dashboard"></i> 130 000km</strong>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong><i class="fa fa-cube"></i> 1800 cc</strong
+                    >&nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong><i class="fa fa-cog"></i> Manual</strong>
+                  </div>
                 </div>
-            </div>
-        </section>
-                       
-        <section id="video-container">
-            <div class="video-overlay"></div>
-            <div class="video-content">
-                <div class="inner">
-                      <div class="section-heading">
-                          <span>Contact Us</span>
-                          <h2>Your dream car wait for you.</h2>
-                      </div>
-                      <!-- Modal button -->
+                <div class="down-content">
+                  <h4>Lorem ipsum dolor sit amet, consectetur</h4>
 
-                      <div class="blue-button">
-                        <a href="/contact">Talk to us</a>
-                      </div>
+                  <br />
+
+                  <p>190 hp / Petrol / 2008 / Used vehicle</p>
+
+                  <p>
+                    <span
+                      ><del><sup>$</sup>11999.00 </del>
+                      <strong><sup>$</sup>11779.00</strong></span
+                    >
+                  </p>
+
+                  <div class="text-button">
+                    <a href="car-details.html">View More</a>
+                  </div>
                 </div>
+              </div>
             </div>
-        </section>
 
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="featured-item">
+                <div class="thumb">
+                  <div class="thumb-img">
+                    <img src="static/img/product-2-720x480.jpg" alt="" />
+                  </div>
+                  <div class="overlay-content">
+                    <strong><i class="fa fa-dashboard"></i> 130 000km</strong>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong><i class="fa fa-cube"></i> 1800 cc</strong
+                    >&nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong><i class="fa fa-cog"></i> Manual</strong>
+                  </div>
+                </div>
+                <div class="down-content">
+                  <h4>Lorem ipsum dolor sit amet, consectetur</h4>
+
+                  <br />
+
+                  <p>190 hp / Petrol / 2008 / Used vehicle</p>
+
+                  <p>
+                    <span
+                      ><del><sup>$</sup>11999.00 </del>
+                      <strong><sup>$</sup>11779.00</strong></span
+                    >
+                  </p>
+
+                  <div class="text-button">
+                    <a href="car-details.html">View More</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="featured-item">
+                <div class="thumb">
+                  <div class="thumb-img">
+                    <img src="static/img/product-3-720x480.jpg" alt="" />
+                  </div>
+                  <div class="overlay-content">
+                    <strong><i class="fa fa-dashboard"></i> 130 000km</strong>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong><i class="fa fa-cube"></i> 1800 cc</strong
+                    >&nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong><i class="fa fa-cog"></i> Manual</strong>
+                  </div>
+                </div>
+                <div class="down-content">
+                  <h4>Lorem ipsum dolor sit amet, consectetur</h4>
+
+                  <br />
+
+                  <p>190 hp / Petrol / 2008 / Used vehicle</p>
+
+                  <p>
+                    <span
+                      ><del><sup>$</sup>11999.00 </del>
+                      <strong><sup>$</sup>11779.00</strong></span
+                    >
+                  </p>
+
+                  <div class="text-button">
+                    <a href="car-details.html">View More</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="featured-item">
+                <div class="thumb">
+                  <div class="thumb-img">
+                    <img src="static/img/product-4-720x480.jpg" alt="" />
+                  </div>
+                  <div class="overlay-content">
+                    <strong><i class="fa fa-dashboard"></i> 130 000km</strong>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong><i class="fa fa-cube"></i> 1800 cc</strong
+                    >&nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong><i class="fa fa-cog"></i> Manual</strong>
+                  </div>
+                </div>
+                <div class="down-content">
+                  <h4>Lorem ipsum dolor sit amet, consectetur</h4>
+
+                  <br />
+
+                  <p>190 hp / Petrol / 2008 / Used vehicle</p>
+
+                  <p>
+                    <span
+                      ><del><sup>$</sup>11999.00 </del>
+                      <strong><sup>$</sup>11779.00</strong></span
+                    >
+                  </p>
+
+                  <div class="text-button">
+                    <a href="car-details.html">View More</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="featured-item">
+                <div class="thumb">
+                  <div class="thumb-img">
+                    <img src="static/img/product-5-720x480.jpg" alt="" />
+                  </div>
+                  <div class="overlay-content">
+                    <strong><i class="fa fa-dashboard"></i> 130 000km</strong>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong><i class="fa fa-cube"></i> 1800 cc</strong
+                    >&nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong><i class="fa fa-cog"></i> Manual</strong>
+                  </div>
+                </div>
+                <div class="down-content">
+                  <h4>Lorem ipsum dolor sit amet, consectetur</h4>
+
+                  <br />
+
+                  <p>190 hp / Petrol / 2008 / Used vehicle</p>
+
+                  <p>
+                    <span
+                      ><del><sup>$</sup>11999.00 </del>
+                      <strong><sup>$</sup>11779.00</strong></span
+                    >
+                  </p>
+
+                  <div class="text-button">
+                    <a href="car-details.html">View More</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="featured-item">
+                <div class="thumb">
+                  <div class="thumb-img">
+                    <img src="static/img/product-6-720x480.jpg" alt="" />
+                  </div>
+                  <div class="overlay-content">
+                    <strong><i class="fa fa-dashboard"></i> 130 000km</strong>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong><i class="fa fa-cube"></i> 1800 cc</strong
+                    >&nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong><i class="fa fa-cog"></i> Manual</strong>
+                  </div>
+                </div>
+                <div class="down-content">
+                  <h4>Lorem ipsum dolor sit amet, consectetur</h4>
+
+                  <br />
+
+                  <p>190 hp / Petrol / 2008 / Used vehicle</p>
+
+                  <p>
+                    <span
+                      ><del><sup>$</sup>11999.00 </del>
+                      <strong><sup>$</sup>11779.00</strong></span
+                    >
+                  </p>
+
+                  <div class="text-button">
+                    <a href="/car-details.html">View More</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="video-container">
+        <div class="video-overlay"></div>
+        <div class="video-content">
+          <div class="inner">
+            <div class="section-heading">
+              <span>Contact Us</span>
+              <h2>Your dream car wait for you.</h2>
+            </div>
+            <!-- Modal button -->
+
+            <div class="blue-button">
+              <a href="/contact">Talk to us</a>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-5">
-                    <div class="about-veno">
-                        <div class="logo">
-                            <img src="static/img/footer_logo.png" alt="Venue Logo">
-                        </div>
-                        <p>Owning a car is not just about driving, it's about the experiences and memories that are created along the way.</p>
-                        <ul class="social-icons">
-                            <li>
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="useful-links">
-                        <div class="footer-heading">
-                            <h4>Useful Links</h4>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <ul>
-                                    <li><a href="/index"><i class="fa fa-stop"></i>Home</a></li>
-                                    <li><a href="/about"><i class="fa fa-stop"></i>About</a></li>
-                                    <li><a href="/contact"><i class="fa fa-stop"></i>Contact Us</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="contact-info">
-                        <div class="footer-heading">
-                            <h4>Contact Information</h4>
-                        </div>
-                        <p><i class="fa fa-map-marker"></i> 212 Barrington Court New York, ABC</p>
-                        <ul>
-                            <li><span>Phone:</span><a href="#">+1 333 4040 5566</a></li>
-                            <li><span>Email:</span><a href="#">contact@company.com</a></li>
-                        </ul>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-5">
+            <div class="about-veno">
+              <div class="logo">
+                <img src="static/img/footer_logo.png" alt="Venue Logo" />
+              </div>
+              <p>
+                Owning a car is not just about driving, it's about the
+                experiences and memories that are created along the way.
+              </p>
+              <ul class="social-icons">
+                <li>
+                  <a href="#"><i class="fa fa-facebook"></i></a>
+                  <a href="#"><i class="fa fa-twitter"></i></a>
+                  <a href="#"><i class="fa fa-linkedin"></i></a>
+                </li>
+              </ul>
             </div>
+          </div>
+          <div class="col-md-4">
+            <div class="useful-links">
+              <div class="footer-heading">
+                <h4>Useful Links</h4>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <ul>
+                    <li>
+                      <a href="/index"><i class="fa fa-stop"></i>Home</a>
+                    </li>
+                    <li>
+                      <a href="/about"><i class="fa fa-stop"></i>About</a>
+                    </li>
+                    <li>
+                      <a href="/contact"
+                        ><i class="fa fa-stop"></i>Contact Us</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="contact-info">
+              <div class="footer-heading">
+                <h4>Contact Information</h4>
+              </div>
+              <p>
+                <i class="fa fa-map-marker"></i> 212 Barrington Court New York,
+                ABC
+              </p>
+              <ul>
+                <li><span>Phone:</span><a href="#">+1 333 4040 5566</a></li>
+                <li><span>Email:</span><a href="#">contact@company.com</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
+      </div>
     </footer>
 
     <div class="sub-footer">
-        <p>Copyright © Fc&Fc / Fast cars and Furiously cheap</p>
+      <p>Copyright © Fc&Fc / Fast cars and Furiously cheap</p>
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script>
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+    <script
+      src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"
+      type="text/javascript"
+    ></script>
+    <script>
+      window.jQuery ||
+        document.write(
+          '<script src="js/vendor/jquery-1.11.2.min.js"><\/script>'
+        );
+    </script>
 
     <script src="js/vendor/bootstrap.min.js"></script>
-    
+
     <script src="js/datepicker.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
-</body>
+  </body>
 </html>

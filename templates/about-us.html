@@ -25,24 +25,35 @@
     <div class="wrap">
         <header id="header">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <button id="primary-nav-button" type="button">Menu</button>
-                        <a href="index.html"><div class="logo">
-                            <img src="static/img/logo.png" alt="Venue Logo">
-                        </div></a>
-                        <nav id="primary-nav" class="dropdown cf">
-                            <ul class="dropdown menu">
-                                <li class='active'><a href="/">Home</a></li>
-                                <li><a href="cars">Cars</a></li>
-                                <li><a href="about-us">About Us</a></li>
-                                <li><a class="nav-link" href="contact">Contact Us</a></li>
-                            </ul>
-                        </nav><!-- / #primary-nav -->
-                    </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <button id="primary-nav-button" type="button">Menu</button>
+                  <a href="index.html"
+                    ><div class="logo">
+                      <img src="static/img/logo.png" alt="Venue Logo" /></div
+                  ></a>
+                  <nav id="primary-nav" class="dropdown cf">
+                    <ul class="dropdown menu">
+                      <li class="active"><a href="/">Home</a></li>
+                      <li><a href="/cars">Cars</a></li>
+                      <li><a href="/about-us">About Us</a></li>
+                      <li><a class="nav-link" href="/contact">Contact Us</a></li>
+                      {% if username %}
+                      <li><a class="nav-link" href="/logout">Logout</a></li>
+                      {% else %}
+                      <li><a class="nav-link" href="/login">Login</a></li>
+                      <li><a class="nav-link" href="/register">Register</a></li>
+                    </ul>
+                  </nav>
                 </div>
+              </div>
             </div>
-        </header>
+                {% endif %} {% if username %}
+                <div class="user">Welcome, {{ username }}! Your role: {{ role }}</div>
+                  {% else %}
+                  <div class="user">Welcome to the website!</div>
+                {% endif %}
+          </header>
     </div>
       
     <section class="banner banner-secondary" id="top" style="background-image: url(static/img/banner-image-1-1920x300.jpg);">

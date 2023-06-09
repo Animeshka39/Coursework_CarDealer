@@ -23,26 +23,37 @@
 <body>
    
     <div class="wrap">
-        <header id="header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <button id="primary-nav-button" type="button">Menu</button>
-                        <a href="index"><div class="logo">
-                            <img src="static/img/logo.png" alt="Venue Logo">
-                        </div></a>
-                        <nav id="primary-nav" class="dropdown cf">
-                            <ul class="dropdown menu">
-                                <li class='active'><a href="/">Home</a></li>
-                                <li><a href="cars">Cars</a></li>
-                                <li><a href="about-us">About Us</a></li>
-                                <li><a class="nav-link" href="contact">Contact Us</a></li>
-                            </ul>
-                        </nav><!-- / #primary-nav -->
-                    </div>
-                </div>
+      <header id="header">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <button id="primary-nav-button" type="button">Menu</button>
+              <a href="index.html"
+                ><div class="logo">
+                  <img src="static/img/logo.png" alt="Venue Logo" /></div
+              ></a>
+              <nav id="primary-nav" class="dropdown cf">
+                <ul class="dropdown menu">
+                  <li class="active"><a href="/">Home</a></li>
+                  <li><a href="/cars">Cars</a></li>
+                  <li><a href="/about-us">About Us</a></li>
+                  <li><a class="nav-link" href="/contact">Contact Us</a></li>
+                  {% if username %}
+                  <li><a class="nav-link" href="/logout">Logout</a></li>
+                  {% else %}
+                  <li><a class="nav-link" href="/login">Login</a></li>
+                  <li><a class="nav-link" href="/register">Register</a></li>
+                </ul>
+              </nav>
             </div>
-        </header>
+          </div>
+        </div>
+            {% endif %} {% if username %}
+            <div class="user">Welcome, {{ username }}! Your role: {{ role }}</div>
+              {% else %}
+              <div class="user">Welcome to the website!</div>
+            {% endif %}
+      </header>
     </div>
       
     <section class="banner banner-secondary" id="top" style="background-image: url(static/img/banner-image-1-1920x300.jpg);">
@@ -65,6 +76,7 @@
             <title>Car Brands</title>
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <script>
+              
               $(document).ready(function () {
                 // Function to populate car models based on selected brand
                 $("#brand").change(function () {
@@ -171,7 +183,9 @@
                         carItem += "<div class='seller-info' style='display: none;'></div>"; // Placeholder for seller info
                         carItem += "<form class='delete-car-form' method='POST' action='/deletecar'>";
                         carItem += "<input type='hidden' name='model_id' value='" + car.model_id + "'>";
-                        carItem += "<button type='submit'>Delete Car</button>";
+                        {% if 'role' in session and session['role'] == 'admin' %}
+                        carItem +=  "<button type='submit'>Delete Car</button>";
+                        {% endif %}
                         carItem += "</form></li>";
         
                         carList.append(carItem);
@@ -187,22 +201,29 @@
                     var modelId = $(this).data('model-id');
                     var sellerInfoContainer = $(this).siblings('.seller-info');
                 
-                    // Retrieve seller information using AJAX
-                    $.get('/sellers', { model_id: modelId }, function(response) {
-                      if (response.seller_name !== 'Seller not found') {
-                        var sellerInfo = "<p>Seller Name: " + response.seller_name + "</p>";
-                        sellerInfo += "<p>Seller Email: " + response.seller_email + "</p>";
-                        sellerInfo += "<p>Seller Phone: " + response.seller_phone + "</p>";
-                        sellerInfo += "<p>Seller Location: " + response.seller_location + "</p>";
-                        sellerInfoContainer.html(sellerInfo);
-                      } else {
-                        sellerInfoContainer.html("Seller information not found.");
-                      }
+                    // Check if the seller information is visible
+                    if (sellerInfoContainer.is(':visible')) {
+                      // If visible, hide the seller information
+                      sellerInfoContainer.hide();
+                    } else {
+                      // If hidden, retrieve and display the seller information using AJAX
+                      $.get('/sellers', { model_id: modelId }, function(response) {
+                        if (response.seller_name !== 'Seller not found') {
+                          var sellerInfo = "<p>Seller Name: " + response.seller_name + "</p>";
+                          sellerInfo += "<p>Seller Email: " + response.seller_email + "</p>";
+                          sellerInfo += "<p>Seller Phone: " + response.seller_phone + "</p>";
+                          sellerInfo += "<p>Seller Location: " + response.seller_location + "</p>";
+                          sellerInfoContainer.html(sellerInfo);
+                        } else {
+                          sellerInfoContainer.html("Seller information not found.");
+                        }
                 
-                      sellerInfoContainer.show();
-                    });
+                        sellerInfoContainer.show();
+                      });
+                    }
                   });
                 });
+                
                 
                 // Function to handle the delete car form submission
                 $(document).on("submit", ".delete-car-form", function (e) {
@@ -346,16 +367,18 @@
                     </ul>
                     
             </div>
-
+            {% if 'role' in session and session['role'] == 'admin' %}
         <button id="add-car-btn" class="btn btn-primary" >Add a Car</button>
-
+        {% endif %}
             <div id="add-car-modal" class="modal">
               <div class="modal-content">
                 <span class="close">&times;</span>
                 <div class="add-car-form">
-                  
+                 
                   <h2>Add a Car</h2>
                   <form action="{{ url_for('add_car') }}" method="POST">
+                    
+                    
                     <label for="brand_id">Brand:</label>
                     <select id="brand_id" name="brand_id" required>
                       {% for carbrand in carbrands %}

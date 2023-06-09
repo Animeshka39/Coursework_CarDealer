@@ -76,7 +76,7 @@ section {
 }
 
 .cf {
-  *zoom: 1;
+  zoom: 1;
 }
 
 #header {
@@ -1482,4 +1482,15 @@ button[type="submit"]:hover {
 
 #add-car-btn:hover {
   background-color: #FE0039;
+}
+.user {
+  text-align: center;
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 18px;
+  color: #FE0039;
+}
+
+.user span {
+  color: #4883ff;
 }

@@ -25,24 +25,35 @@
     <div class="wrap">
         <header id="header">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <button id="primary-nav-button" type="button">Menu</button>
-                        <a href="index.html"><div class="logo">
-                            <img src="static/img/logo.png" alt="Venue Logo">
-                        </div></a>
-                        <nav id="primary-nav" class="dropdown cf">
-                            <ul class="dropdown menu">
-                                <li class='active'><a href="/">Home</a></li>
-                                <li><a href="cars">Cars</a></li>
-                                <li><a href="about-us">About Us</a></li>
-                                <li><a class="nav-link" href="contact">Contact Us</a></li>
-                            </ul>
-                        </nav><!-- / #primary-nav -->
-                    </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <button id="primary-nav-button" type="button">Menu</button>
+                  <a href="index.html"
+                    ><div class="logo">
+                      <img src="static/img/logo.png" alt="Venue Logo" /></div
+                  ></a>
+                  <nav id="primary-nav" class="dropdown cf">
+                    <ul class="dropdown menu">
+                      <li class="active"><a href="/">Home</a></li>
+                      <li><a href="/cars">Cars</a></li>
+                      <li><a href="/about-us">About Us</a></li>
+                      <li><a class="nav-link" href="/contact">Contact Us</a></li>
+                      {% if username %}
+                      <li><a class="nav-link" href="/logout">Logout</a></li>
+                      {% else %}
+                      <li><a class="nav-link" href="/login">Login</a></li>
+                      <li><a class="nav-link" href="/register">Register</a></li>
+                    </ul>
+                  </nav>
                 </div>
+              </div>
             </div>
-        </header>
+                {% endif %} {% if username %}
+                <div class="user">Welcome, {{ username }}! Your role: {{ role }}</div>
+                  {% else %}
+                  <div class="user">Welcome to the website!</div>
+                {% endif %}
+          </header>
     </div>
       
     <section class="banner banner-secondary" id="top" style="background-image: url(static/img/banner-image-3-1920x300.jpg);">
@@ -65,30 +76,40 @@
                     <div class="row">
                         <div class="col-md-8"> 
                             <div class="left-content">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                      <fieldset>
-                                        <input name="name" type="text" class="form-control" id="name" placeholder="Your name..." required="">
-                                      </fieldset>
-                                    </div>
-                                     <div class="col-md-6">
-                                      <fieldset>
-                                        <input name="subject" type="text" class="form-control" id="subject" placeholder="Subject..." required="">
-                                      </fieldset>
-                                    </div>
-                                    <div class="col-md-12">
-                                      <fieldset>
-                                        <textarea name="message" rows="6" class="form-control" id="message" placeholder="Your message..." required=""></textarea>
-                                      </fieldset>
-                                    </div>
-                                    <div class="col-md-12">
-                                      <fieldset>
-                                        <div class="blue-button">
-                                            <a href="#" id="form-submit" class="btn">Send Message</a>
-                                        </div>
-                                      </fieldset>
-                                    </div>
-                                </div>
+                                {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li class="message">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  <form action="/send-message" method="post">
+    <div class="row">
+      <div class="col-md-6">
+        <fieldset>
+          <input name="name" type="text" class="form-control" id="name" placeholder="Your name..." required>
+        </fieldset>
+      </div>
+      <div class="col-md-6">
+        <fieldset>
+          <input name="subject" type="text" class="form-control" id="subject" placeholder="Subject..." required>
+        </fieldset>
+      </div>
+      <div class="col-md-12">
+        <fieldset>
+          <textarea name="message" rows="6" class="form-control" id="message" placeholder="Your message..." required></textarea>
+        </fieldset>
+      </div>
+      <div class="col-md-12">
+        <fieldset>
+          <button type="submit" class="btn">Send Message</button>
+        </fieldset>
+      </div>
+    </div>
+  </form>
                             </div>
                         </div>
                         <div class="col-md-4">
