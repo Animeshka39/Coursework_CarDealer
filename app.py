@@ -8,10 +8,11 @@ app.secret_key = "caircocoders-ednalan"
 # Database configuration
 DB_HOST = "localhost"
 DB_NAME = "sampledb0"
+DB_PORT = '5432'
 DB_USER = "postgres"
 DB_PASS = "51654372985"
 
-conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST)
+conn = psycopg2.connect(dbname=DB_NAME, dbport=DB_PORT, user=DB_USER, password=DB_PASS, host=DB_HOST)
 
 
 @app.route('/')
