@@ -299,6 +299,7 @@ def add_car():
 
     brand_id = request.form.get('brand_id')
     car_model = request.form.get('car_model')
+    car_photo = request.form.get('car_photo')
     body_type = request.form.get('body_type')
     number_doors = request.form.get('number_doors')
     price_range = request.form.get('price_range')
@@ -316,9 +317,9 @@ def add_car():
     location = request.form.get('location')
     seller_id = request.form.get('seller_id')
 
-    query = "INSERT INTO carmodels (brand_id, car_model, body_type, number_doors, price_range, year, mileage, transmission, fuel_type, color, technical_condition, customs_cleared, driven_from, engine_size, engine_name, engine_hp, location, seller_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    query = "INSERT INTO carmodels (brand_id, car_model, car_photo, body_type, number_doors, price_range, year, mileage, transmission, fuel_type, color, technical_condition, customs_cleared, driven_from, engine_size, engine_name, engine_hp, location, seller_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
     
-    cur.execute(query, (brand_id, car_model, body_type, number_doors, price_range, year, mileage, transmission, fuel_type, color, technical_condition, customs_cleared, driven_from, engine_size, engine_name, engine_hp, location, seller_id))
+    cur.execute(query, (brand_id, car_model, car_photo, body_type, number_doors, price_range, year, mileage, transmission, fuel_type, color, technical_condition, customs_cleared, driven_from, engine_size, engine_name, engine_hp, location, seller_id))
     conn.commit()
     
     return redirect('/cars')
