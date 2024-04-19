@@ -20,41 +20,49 @@
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
-
-<body>
-   
-    <div class="wrap">
-      <header id="header">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <button id="primary-nav-button" type="button">Menu</button>
-              <a href="index.html"
-                ><div class="logo">
-                  <img src="static/img/logo.png" alt="Venue Logo" /></div
-              ></a>
-              <nav id="primary-nav" class="dropdown cf">
-                <ul class="dropdown menu">
-                  <li class="active"><a href="/">Home</a></li>
-                  <li><a href="/cars">Cars</a></li>
-                  <li><a href="/about-us">About Us</a></li>
-                  <li><a class="nav-link" href="/contact">Contact Us</a></li>
-                  {% if username %}
-                  <li><a class="nav-link" href="/logout">Logout</a></li>
-                  {% else %}
-                  <li><a class="nav-link" href="/login">Login</a></li>
-                  <li><a class="nav-link" href="/register">Register</a></li>
-                </ul>
-              </nav>
+    <div class="log-reg">
+      <a class="nav-link" >Login</a>
+        <a class="nav-link" >Register</a>
+      {% if username %}
+      
+      <div class="user">
+        Welcome, {{ username }}! Your role: {{ role }}
+      </div>
+      <div class="nav-links">
+        <a class="nav-link" href="/logout">Logout</a>
+      </div>
+      {% else %}
+      <div class="user">Welcome to the website!</div>
+      <div class="nav-links">
+        <a class="nav-link" href="/login">Login</a>
+        <a class="nav-link" href="/register">Register</a>
+      </div>
+      {% endif %}
+    </div>
+    <body>
+      
+      <div class="wrap">
+        <header id="header">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <button id="primary-nav-button" type="button">Menu</button>
+                  <a href="/"
+                    ><div class="logo">
+                      <img src="static/img/logotest.png" alt="Venue Logo" /></div
+                  ></a>
+                  <nav id="primary-nav" class="dropdown cf">
+                    <ul class="dropdown menu">
+                      <li><a href="/about-us">About Us</a></li>
+                      <li><a href="/cars">Cars</a></li>
+                      <li><a class="nav-link" href="/contact">Contact Us</a></li>
+                    </ul>
+                  </nav>
+                  
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-            {% endif %} {% if username %}
-            <div class="user">Welcome, {{ username }}! Your role: {{ role }}</div>
-              {% else %}
-              <div class="user">Welcome to the website!</div>
-            {% endif %}
-      </header>
+          </header>
     </div>
       
     <section class="banner banner-secondary" id="top" style="background-image: url(static/img/banner-image-1-1920x300.jpg);">

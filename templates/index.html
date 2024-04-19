@@ -15,48 +15,61 @@
     <link rel="stylesheet" href="static/owl-carousel.css" />
     <link rel="stylesheet" href="static/style.css" />
 
-    <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900"rel="stylesheet"/>
-    
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900"
+      rel="stylesheet"
+    />
 
     <script src="static/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
   </head>
-
+  <div class="log-reg">
+    <a class="nav-link" >Login</a>
+      <a class="nav-link" >Register</a>
+    {% if username %}
+    
+    <div class="user">
+      Welcome, {{ username }}! Your role: {{ role }}
+    </div>
+    <div class="nav-links">
+      <a class="nav-link" href="/logout">Logout</a>
+    </div>
+    {% else %}
+    <div class="user">Welcome to the website!</div>
+    <div class="nav-links">
+      <a class="nav-link" href="/login">Login</a>
+      <a class="nav-link" href="/register">Register</a>
+    </div>
+    {% endif %}
+  </div>
   <body>
+    
     <div class="wrap">
       <header id="header">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <button id="primary-nav-button" type="button">Menu</button>
-              <a href="index.html"
-                ><div class="logo">
-                  <img src="static/img/logo.png" alt="Venue Logo" /></div
-              ></a>
-              <nav id="primary-nav" class="dropdown cf">
-                <ul class="dropdown menu">
-                  <li class="active"><a href="/">Home</a></li>
-                  <li><a href="/cars">Cars</a></li>
-                  <li><a href="/about-us">About Us</a></li>
-                  <li><a class="nav-link" href="/contact">Contact Us</a></li>
-                  {% if username %}
-                  <li><a class="nav-link" href="/logout">Logout</a></li>
-                  {% else %}
-                  <li><a class="nav-link" href="/login">Login</a></li>
-                  <li><a class="nav-link" href="/register">Register</a></li>
-                </ul>
-              </nav>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <button id="primary-nav-button" type="button">Menu</button>
+                <a href="/"
+                  ><div class="logo">
+                    <img src="static/img/logotest.png" alt="Venue Logo" /></div
+                ></a>
+                <nav id="primary-nav" class="dropdown cf">
+                  <ul class="dropdown menu">
+                    <li><a href="/about-us">About Us</a></li>
+                    <li><a href="/cars">Cars</a></li>
+                    <li><a class="nav-link" href="/contact">Contact Us</a></li>
+                  </ul>
+                </nav>
+                
+              </div>
             </div>
           </div>
-        </div>
-            {% endif %} {% if username %}
-            <div class="user">Welcome, {{ username }}! Your role: {{ role }}</div>
-              {% else %}
-              <div class="user">Welcome to the website!</div>
-            {% endif %}
-      </header>
-    </div>
+        </header>
+  </div>
 
     <section
       class="banner"
@@ -121,7 +134,7 @@
           </div>
         </div>
       </section>
-   
+
       <section id="video-container">
         <div class="video-overlay"></div>
         <div class="video-content">
@@ -154,12 +167,19 @@
               </p>
               <ul class="social-icons">
                 <li>
-                    
-                  <a href="https://www.facebook.com/sasha.sergienko.944"><i class="fa fa-facebook"></i></a>
-                  <a href="https://twitter.com/sashasergienk9"><i class="fa fa-twitter"></i></a>
-                  <a href="https://www.linkedin.com/in/sasha-sergienko-07b2a2246/"><i class="fa fa-linkedin"></i></a>
-                  <a href="https://www.instagram.com/goadventure___/"><i class="fa fa-instagram"></i></a>
-                  
+                  <a href="https://www.facebook.com/sasha.sergienko.944"
+                    ><i class="fa fa-facebook"></i
+                  ></a>
+                  <a href="https://twitter.com/sashasergienk9"
+                    ><i class="fa fa-twitter"></i
+                  ></a>
+                  <a
+                    href="https://www.linkedin.com/in/sasha-sergienko-07b2a2246/"
+                    ><i class="fa fa-linkedin"></i
+                  ></a>
+                  <a href="https://www.instagram.com/goadventure___/"
+                    ><i class="fa fa-instagram"></i
+                  ></a>
                 </li>
               </ul>
             </div>
@@ -179,7 +199,9 @@
                       <a href="/about-us"><i class="fa fa-stop"></i>About</a>
                     </li>
                     <li>
-                      <a href="/contact"><i class="fa fa-stop"></i>Contact Us</a>
+                      <a href="/contact"
+                        ><i class="fa fa-stop"></i>Contact Us</a
+                      >
                     </li>
                   </ul>
                 </div>
@@ -192,11 +214,14 @@
                 <h4>Contact Information</h4>
               </div>
               <p>
-                <i class="fa fa-map-marker"></i> Cherkasy State Technological University
+                <i class="fa fa-map-marker"></i> Cherkasy State Technological
+                University
               </p>
               <ul>
                 <li><span>Phone:</span><a href="#">097 19 266 31</a></li>
-                <li><span>Email:</span><a href="#">sergiosasa9@gmail.com</a></li>
+                <li>
+                  <span>Email:</span><a href="#">sergiosasa9@gmail.com</a>
+                </li>
               </ul>
             </div>
           </div>
