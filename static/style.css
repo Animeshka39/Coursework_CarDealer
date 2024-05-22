@@ -115,7 +115,7 @@ footer {
 
 /* Sub-footer styles */
 .sub-footer {
-  background-color: #333;
+  background-color: #0000004f;
   /* Sub-footer background color */
 
   text-align: center;
@@ -506,7 +506,7 @@ section.banner {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, .3);
+  /* background-color: rgba(0, 0, 0, .3); */
   z-index: 1;
   border-radius: 5px;
 }
@@ -1422,7 +1422,7 @@ footer .contact-info ul li a {
 .sub-footer p {
   text-align: center;
   display: inline-block;
-  background-color: #0A1627;
+  /* background-color: #0000004f; */
   width: 100%;
   margin-bottom: 0px;
   padding: 30px 0px;
@@ -1572,6 +1572,9 @@ button[type="submit"]:hover {
   padding: 10px;
   box-sizing: border-box;
   text-align: center;
+  border: 1px solid #ccc0;
+  margin-top: 10px;
+  background-color: #0a16274d;
 }
 
 #car-list li img {
@@ -1589,7 +1592,7 @@ button[type="submit"]:hover {
 #car-list li p {
   margin: 5px 0;
   font-size: 20px;
-  color: #40e746;
+  color: #ffffff;
   line-height: 1.4;
 }
 
